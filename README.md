@@ -66,7 +66,7 @@ docker exec -it maquina2 bash
    ```
 2. **Execute o Cliente TCP** na `maquina2`:
    ```bash
-   python3 servidor-udp.py
+   python3 cliente-tcp.py
    ```
 
 ---
