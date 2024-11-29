@@ -10,12 +10,19 @@ def start_tcp_server(host='0.0.0.0', port=5000):
         client_socket, client_address = server_socket.accept()
         print(f"Conexão recebida de {client_address}")
         
-        message = client_socket.recv(1024).decode()
-        print(f"Mensagem recebida: {message}")
+        # Receber nome do arquivo
+        file_name = client_socket.recv(1024).decode()
+        print(f"Recebendo arquivo: {file_name}")
         
-        response = f"Olá, {client_address}! Sua mensagem foi recebida."
-        client_socket.send(response.encode())
+        # Responder que está pronto para receber
+        client_socket.send("READY".encode())
         
+        # Receber o conteúdo do arquivo e salvá-lo
+        with open(file_name, "wb") as file:
+            while chunk := client_socket.recv(1024):
+                file.write(chunk)
+        
+        print(f"Arquivo {file_name} recebido e salvo com sucesso.")
         client_socket.close()
 
 if __name__ == "__main__":

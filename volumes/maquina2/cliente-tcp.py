@@ -1,15 +1,33 @@
 import socket
+import os
 
 def start_tcp_client(server_host, server_port):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((server_host, server_port))
     
-    message = input("Digite a mensagem para enviar ao servidor: ")
-    client_socket.send(message.encode())
+    file_path = input("Digite o caminho do arquivo para enviar ao servidor: ")
+    if not os.path.exists(file_path):
+        print("Arquivo não encontrado!")
+        client_socket.close()
+        return
     
-    response = client_socket.recv(1024).decode()
-    print(f"Resposta do servidor: {response}")
+    # Enviar nome do arquivo
+    file_name = os.path.basename(file_path)
+    client_socket.send(file_name.encode())
     
+    # Confirmar prontidão do servidor
+    server_ready = client_socket.recv(1024).decode()
+    if server_ready != "READY":
+        print("Erro: o servidor não está pronto para receber o arquivo.")
+        client_socket.close()
+        return
+    
+    # Enviar o conteúdo do arquivo
+    with open(file_path, "rb") as file:
+        while chunk := file.read(1024):
+            client_socket.send(chunk)
+    
+    print("Arquivo enviado com sucesso.")
     client_socket.close()
 
 if __name__ == "__main__":
