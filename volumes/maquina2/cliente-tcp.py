@@ -22,12 +22,15 @@ def start_tcp_client(server_host, server_port):
         client_socket.close()
         return
     
+    pacotes_enviados = 0
     # Enviar o conteúdo do arquivo
     with open(file_path, "rb") as file:
         while chunk := file.read(1024):
             client_socket.send(chunk)
+            pacotes_enviados += 1
     
     print("Arquivo enviado com sucesso.")
+    print(f"Pacotes enviados: {pacotes_enviados}")
     client_socket.close()
 
 if __name__ == "__main__":

@@ -15,13 +15,17 @@ def start_udp_client(server_host, server_port):
     client_socket.sendto(file_name.encode(), (server_host, server_port))
     print(f"Enviando arquivo: {file_name}")
 
+    pacotes_enviados = 0
     with open(file_path, "rb") as file:
         while chunk := file.read(1024):
             client_socket.sendto(chunk, (server_host, server_port))
+            pacotes_enviados += 1
     
     # Enviar indicador de fim de transmissão
     client_socket.sendto("EOF".encode(), (server_host, server_port))
+    pacotes_enviados += 1
     print("Arquivo enviado com sucesso.")
+    print(f"Pacotes enviados: {pacotes_enviados}")  
 
     # Receber confirmação do servidor
     response, _ = client_socket.recvfrom(1024)

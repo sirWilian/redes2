@@ -17,12 +17,15 @@ def start_tcp_server(host='0.0.0.0', port=5000):
         # Responder que está pronto para receber
         client_socket.send("READY".encode())
         
+        pacotes_recebidos = 0
         # Receber o conteúdo do arquivo e salvá-lo
         with open(file_name, "wb") as file:
             while chunk := client_socket.recv(1024):
                 file.write(chunk)
+                pacotes_recebidos += 1
         
         print(f"Arquivo {file_name} recebido e salvo com sucesso.")
+        print(f"Pacotes recebidos: {pacotes_recebidos}")
         client_socket.close()
 
 if __name__ == "__main__":
