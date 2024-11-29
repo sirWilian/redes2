@@ -1,4 +1,5 @@
 import socket
+import time
 
 def start_tcp_server(host='0.0.0.0', port=5000):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,9 +24,14 @@ def start_tcp_server(host='0.0.0.0', port=5000):
             while chunk := client_socket.recv(1024):
                 file.write(chunk)
                 pacotes_recebidos += 1
+                
+        # Envia end_time para o cliente
+        end_time = time.time()
+        client_socket.send(str(end_time).encode())
         
         print(f"Arquivo {file_name} recebido e salvo com sucesso.")
         print(f"Pacotes recebidos: {pacotes_recebidos}")
+        
         client_socket.close()
 
 if __name__ == "__main__":
