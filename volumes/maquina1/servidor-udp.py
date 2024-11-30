@@ -22,13 +22,13 @@ def start_udp_server(host='0.0.0.0', port=5001):
                     print(f"Arquivo {file_name} recebido com sucesso.")
                     break
                 file.write(data)
+        end_time = time.time()
 
         # Enviar confirmação ao cliente
         response = f"Arquivo {file_name} recebido com sucesso."
         server_socket.sendto(response.encode(), client_address)
         
         # Envia end_time para o cliente
-        end_time = time.time()
         server_socket.sendto(str(end_time).encode(), client_address)
         
         print(f"Pacotes recebidos: {pacotes_recebidos}")
