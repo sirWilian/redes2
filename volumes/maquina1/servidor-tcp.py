@@ -37,12 +37,13 @@ def start_tcp_server(host='0.0.0.0', port=5000):
         end_time = time.time()
         client_socket.send(str(end_time).encode())
         file_size = os.path.getsize(file_name)
+        
+        client_socket.close()
+        print(f"[INFO] conexao encerrada")
 
         print(f"[ESTATISTICA] Arquivo {file_name} de tamanho {file_size} recebido e salvo com sucesso.")
         print(f"[ESTATISTICA] Pacotes recebidos: {pacotes_recebidos}")
         
-        client_socket.close()
-        print(f"[INFO] conexao encerrada")
         return
 if __name__ == "__main__":
     start_tcp_server()

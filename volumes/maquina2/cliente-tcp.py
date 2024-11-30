@@ -51,6 +51,6 @@ def start_tcp_client(server_host, server_port):
     print(f"[ESTATISTICA] Arquivo {file_name} de tamanho {file_size} bytes foi enviado com sucesso.")
     print(f"[ESTATISTICA] Pacotes enviados: {pacotes_enviados}")
     print(f"[ESTATISTICA] Tempo total da transferência: {total_time:.6f} segundos")
-
+    
 if __name__ == "__main__":
     start_tcp_client('192.168.1.2', 5000)
