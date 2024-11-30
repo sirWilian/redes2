@@ -12,7 +12,8 @@ services:
     working_dir: /scripts
     environment:
       - DEBIAN_FRONTEND=noninteractive
-    entrypoint: bash setup-environment.sh && /bin/bash
+    entrypoint: ["/bin/bash", "-c", "bash setup-environment.sh; exec /bin/bash"]
+
 
   maquina2:
     image: ubuntu:latest
@@ -27,7 +28,7 @@ services:
     working_dir: /scripts
     environment:
       - DEBIAN_FRONTEND=noninteractive
-    entrypoint: bash setup-environment.sh && /bin/bash
+    entrypoint: ["/bin/bash", "-c", "bash setup-environment.sh; exec /bin/bash"]
 
 networks:
   my_network:

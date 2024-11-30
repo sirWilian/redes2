@@ -47,13 +47,13 @@ docker-compose up -d
 ### Acessar maquina1
 
 ```bash
-docker exec -it maquina1 bash
+docker exec -it maquina1 /bin/bash
 ```
 
 ### Acessar maquina2
 
 ```bash
-docker exec -it maquina2 bash
+docker exec -it maquina2 /bin/bash
 ```
 
 ---
